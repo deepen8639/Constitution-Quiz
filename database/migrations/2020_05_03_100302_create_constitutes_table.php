@@ -18,7 +18,7 @@ class CreateConstitutesTable extends Migration
         return;
       }
       Schema::create('constitutes', function (Blueprint $table) {
-          $table->integer('id');
+          $table->integer('id')->unique();
           $table->text('provision');
           $table->string('caption',50)->nullable();
           $table->string('title',25)->nullable();
@@ -38,6 +38,7 @@ class CreateConstitutesTable extends Migration
      */
     public function down()
     {
-        //
+      Schema::dropIfExists('constitutes');
+
     }
 }
