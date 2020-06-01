@@ -4,6 +4,10 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import VueRouter from 'vue-router';
+import Vuetify from 'vuetify';
+import 'vuetify/dist/vuetify.min.css';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
+import '@mdi/font/css/materialdesignicons.css';
 import ConstitutionHomeComponent from "./components/ConstitutionHomeComponent";
 import ConstitutionQuizComponent from "./components/ConstitutionQuizComponent";
 import ConstitutionResultComponent from "./components/ConstitutionResultComponent";
@@ -14,6 +18,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 Vue.use(VueRouter);
+Vue.use(Vuetify);
 
 const router = new VueRouter({
     mode: 'history',
@@ -62,6 +67,7 @@ Vue.component('header-component', HeaderComponent);
 const app = new Vue({
     el: '#app',
     router,
+    vuetify: new Vuetify(),
     mounted : function(){
    console.log('app mounted')
    console.log(this.$el)
