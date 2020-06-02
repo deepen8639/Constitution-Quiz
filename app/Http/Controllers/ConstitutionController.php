@@ -8,9 +8,14 @@ use Illuminate\Http\Request;
 
 class ConstitutionController extends Controller
 {
-    public function index()
+    public function returnChapter()
     {
       return Chapter::where('id','>', 0)->get();
+    }
+
+    public function returnProvision()
+    {
+      return Constitute::all();
     }
 
     public function quiz($chapter_id)

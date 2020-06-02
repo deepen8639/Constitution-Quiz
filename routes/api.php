@@ -16,5 +16,7 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/chapter', 'ConstitutionController@index');
+Route::get('/chapter', 'ConstitutionController@returnChapter');
+Route::get('/provision', 'ConstitutionController@returnProvision');
+
 Route::get('/quiz/{chapter_id}', 'ConstitutionController@quiz');

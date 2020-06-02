@@ -8,10 +8,15 @@ import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import '@mdi/font/css/materialdesignicons.css';
+
+//pagecomponentのimport
 import ConstitutionHomeComponent from "./components/ConstitutionHomeComponent";
 import ConstitutionQuizComponent from "./components/ConstitutionQuizComponent";
 import ConstitutionResultComponent from "./components/ConstitutionResultComponent";
 import HeaderComponent from "./components/HeaderComponent";
+import LoginFormComponent from "./components/LoginFormComponent";
+import RegisterFormComponent from "./components/RegisterFormComponent";
+
 
 require('./bootstrap');
 
@@ -40,7 +45,17 @@ const router = new VueRouter({
           name: 'constitution.result',
           component: ConstitutionResultComponent,
           props: true
-        }
+        },
+        {
+          path: '/constitution/login',
+          name: 'constitution.login',
+          component: LoginFormComponent,
+        },
+        {
+          path: '/constitution/register',
+          name: 'constitution.register',
+          component: RegisterFormComponent,
+        },
 
     ]
 });

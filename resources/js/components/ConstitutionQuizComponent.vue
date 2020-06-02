@@ -42,13 +42,13 @@
       </h4>
     </div>
     <div class="row">
-      <button type="button" v-on:click="check(choices[0], 1)" v-bind:disabled='isclicked1' v-bind:class="classObject">{{ choices[0] }}</button>
+      <button type="button" v-on:click="check(choices[0], 1)" v-bind:disabled='isclicked1' class="btn btn-block btn-lg">{{ choices[0] }}</button>
     </div>
     <div class="row">
-      <button type="button" v-on:click="check(choices[1], 2)" v-bind:disabled='isclicked2' v-bind:class="classObject">{{ choices[1] }}</button>
+      <button type="button" v-on:click="check(choices[1], 2)" v-bind:disabled='isclicked2' class="btn btn-block btn-lg">{{ choices[1] }}</button>
     </div>
     <div class="row">
-      <button type="button" v-on:click="check(choices[2], 3)" v-bind:disabled='isclicked3' v-bind:class="classObject">{{ choices[2] }}</button>
+      <button type="button" v-on:click="check(choices[2], 3)" v-bind:disabled='isclicked3' class="btn btn-block btn-lg">{{ choices[2] }}</button>
     </div>
   </div>
 
