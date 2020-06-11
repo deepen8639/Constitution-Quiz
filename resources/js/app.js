@@ -16,7 +16,8 @@ import ConstitutionResultComponent from "./components/ConstitutionResultComponen
 import HeaderComponent from "./components/HeaderComponent";
 import LoginFormComponent from "./components/LoginFormComponent";
 import RegisterFormComponent from "./components/RegisterFormComponent";
-
+import VuetifyHomeComponent from "./components/VuetifyHomeComponent";
+import Practice from "./components/Practice";
 
 require('./bootstrap');
 
@@ -56,7 +57,16 @@ const router = new VueRouter({
           name: 'constitution.register',
           component: RegisterFormComponent,
         },
-
+        {
+          path: '/constitution/vuetifyhome',
+          name: 'constitution.vuetifyhome',
+          component: VuetifyHomeComponent,
+        },
+        {
+          path: '/practice',
+          name: 'practice',
+          component: Practice,
+        },
     ]
 });
 
