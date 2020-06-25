@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
           ConstitutesTableSeeder::class,
           ChaptersTableSeeder::class,
+          UsersTableSeeder::class,
+          CrossUseridCustomquizzesTableSeeder::class,
+          CustomQuizzesTableSeeder::class,
         ]);
     }
 }

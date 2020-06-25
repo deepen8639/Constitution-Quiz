@@ -18,7 +18,7 @@ class CreateCrossUseridCustomquizzesTable extends Migration
         return;
         }
         Schema::create('cross_userid_customquizzes', function (Blueprint $table) {
-            $table->Increments('custom_quize_id')->unsigned();;
+            $table->Increments('custom_quize_id')->unsigned();
             $table->string('user_id');
             $table->foreign('user_id')->references('user_id')->on('users');
             $table->timestamps();

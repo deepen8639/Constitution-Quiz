@@ -10,14 +10,16 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import '@mdi/font/css/materialdesignicons.css';
 
 //pagecomponentのimport
-import ConstitutionHomeComponent from "./components/ConstitutionHomeComponent";
-import ConstitutionQuizComponent from "./components/ConstitutionQuizComponent";
-import ConstitutionResultComponent from "./components/ConstitutionResultComponent";
-import HeaderComponent from "./components/HeaderComponent";
-import LoginFormComponent from "./components/LoginFormComponent";
-import RegisterFormComponent from "./components/RegisterFormComponent";
+import VuetifyLoginFormComponent from "./components/VuetifyLoginFormComponent";
+import VuetifyRegisterFormComponent from "./components/VuetifyRegisterFormComponent";
 import VuetifyHomeComponent from "./components/VuetifyHomeComponent";
-import Practice from "./components/Practice";
+import VuetifyQuizComponent from "./components/VuetifyQuizComponent";
+import VuetifyHeaderComponent from "./components/VuetifyHeaderComponent";
+import VuetifyResultComponent from "./components/VuetifyResultComponent";
+import VuetifyMyPageComponent from "./components/VuetifyMyPageComponent";
+
+
+import GlobalStateManager from "./components/state/GlobalStateManager";
 
 require('./bootstrap');
 
@@ -27,47 +29,63 @@ Vue.use(VueRouter);
 Vue.use(Vuetify);
 
 const router = new VueRouter({
-    mode: 'history',
-    routes: [
+  mode: 'history',
+  routes: [
 
-        {
-            path: '/constitution',
-            name: 'constitution.home',
-            component: ConstitutionHomeComponent
-        },
-        {
-          path: '/constitution/:chapterId/quiz',
-          name: 'constitution.quiz',
-          component: ConstitutionQuizComponent,
-          props: true
-        },
-        {
-          path: '/constitution/result',
-          name: 'constitution.result',
-          component: ConstitutionResultComponent,
-          props: true
-        },
-        {
-          path: '/constitution/login',
-          name: 'constitution.login',
-          component: LoginFormComponent,
-        },
-        {
-          path: '/constitution/register',
-          name: 'constitution.register',
-          component: RegisterFormComponent,
-        },
-        {
-          path: '/constitution/vuetifyhome',
-          name: 'constitution.vuetifyhome',
-          component: VuetifyHomeComponent,
-        },
-        {
-          path: '/practice',
-          name: 'practice',
-          component: Practice,
-        },
-    ]
+    // {
+    //     path: '/constitution',
+    //     name: 'constitution.home',
+    //     component: ConstitutionHomeComponent
+    // },
+    // {
+    //   path: '/constitution/:chapterId/quiz',
+    //   name: 'constitution.quiz',
+    //   component: ConstitutionQuizComponent,
+    //   props: true
+    // },
+    // {
+    //   path: '/constitution/result',
+    //   name: 'constitution.result',
+    //   component: ConstitutionResultComponent,
+    //   props: true
+    // },
+    {
+      path: '/constitution/login',
+      name: 'constitution.login',
+      component: VuetifyLoginFormComponent,
+      props: true,
+    },
+    {
+      path: '/constitution/register',
+      name: 'constitution.register',
+      component: VuetifyRegisterFormComponent,
+      props: true,
+    },
+    {
+      path: '/constitution/home',
+      name: 'constitution.home',
+      component: VuetifyHomeComponent,
+      props: true,
+    },
+    {
+      path: '/constitution/quiz',
+      name: 'constitution.quiz',
+      component: VuetifyQuizComponent,
+      props: true,
+    },
+    {
+      path: '/constitution/result',
+      name: 'constitution.result',
+      component: VuetifyResultComponent,
+      props: true,
+    },
+    {
+      path: '/constitution/mypage',
+      name: 'constitution.mypage',
+      component: VuetifyMyPageComponent,
+      props: true,
+    },
+  ]
 });
 
 /**
@@ -81,8 +99,10 @@ const router = new VueRouter({
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('header-component', HeaderComponent);
+// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component('header-component', HeaderComponent);
+Vue.component('vuetify-header-component', VuetifyHeaderComponent);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -90,11 +110,13 @@ Vue.component('header-component', HeaderComponent);
  */
 
 const app = new Vue({
-    el: '#app',
-    router,
-    vuetify: new Vuetify(),
-    mounted : function(){
-   console.log('app mounted')
-   console.log(this.$el)
- }
+  el: '#app',
+  router,
+  vuetify: new Vuetify(),
+  mounted: function() {
+    console.log('app mounted')
+    console.log(this.$el)
+    GlobalStateManager.axiosgetChapter();
+    GlobalStateManager.axiosgetProvision();
+  }
 });

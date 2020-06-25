@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CustomQuize extends Model
+class CustomQuizzes extends Model
 {
     //
 }
