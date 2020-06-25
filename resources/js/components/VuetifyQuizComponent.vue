@@ -199,6 +199,9 @@ export default {
   computed: {},
 
   mounted() {
+    if (this.provision_selected === undefined) {
+      this.$router.push({name: "constitution.home"});
+    }
     this.set_provision_selected_apart();
     this.set_next_quiz();
     console.log('ConstitutionQuizComponent mounted.');
