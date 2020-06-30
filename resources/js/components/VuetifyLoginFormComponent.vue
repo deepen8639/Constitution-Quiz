@@ -57,43 +57,40 @@ export default {
 
   methods: {
     axiosLogin(user_id, password) {
+      //login認証
+      let self = this;
       let authinfo = {
         "user_id": user_id,
         "password": password,
-        "_token": this.csrfToken,
+        "_token": GlobalStateManager.state.csrfToken.data,
       }
       console.log(authinfo);
-
       axios.post("/login", authinfo)
         .then(function(res) {
           console.log("response is", res);
-          this.response = res;
-          GlobalStateManager.setUserId(user_id);
-          GlobalStateManager.axiosgetUserCustomQuiz(user_id);
-          // this.$router.push({
-          //   name: "constitution.mypage"
-          // });
-        }.bind(this))
-
+          GlobalStateManager.setUserID(user_id);
+          self.$router.push({
+            name: "constitution.mypage"
+          });
+        })
         .catch(function(error) {
           console.log("login error ", error);
-          this.error = error;
-        }.bind(this));
+        })
     },
     moveRegisterPage() {
-      this.$router.push({name: "constitution.register"})
+      this.$router.push({
+        name: "constitution.register"
+      })
     },
 
 
   },
-  created() {
-    this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    //もしもログインしているならばマイページに飛ぶ
-    // if (this.user_id.data) {
-    //   this.$router.push({name: "constitution.mypage"});
-    // } else {
-    //   return;
-    // }
+  mounted() {
+    if (this.user_id.data) {
+      this.$router.push({name: "constitution.mypage"});
+    } else {
+      return;
+    }
   }
 }
 </script>

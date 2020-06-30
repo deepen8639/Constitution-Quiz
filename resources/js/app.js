@@ -31,24 +31,6 @@ Vue.use(Vuetify);
 const router = new VueRouter({
   mode: 'history',
   routes: [
-
-    // {
-    //     path: '/constitution',
-    //     name: 'constitution.home',
-    //     component: ConstitutionHomeComponent
-    // },
-    // {
-    //   path: '/constitution/:chapterId/quiz',
-    //   name: 'constitution.quiz',
-    //   component: ConstitutionQuizComponent,
-    //   props: true
-    // },
-    // {
-    //   path: '/constitution/result',
-    //   name: 'constitution.result',
-    //   component: ConstitutionResultComponent,
-    //   props: true
-    // },
     {
       path: '/constitution/login',
       name: 'constitution.login',
@@ -99,7 +81,6 @@ const router = new VueRouter({
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 // Vue.component('header-component', HeaderComponent);
 Vue.component('vuetify-header-component', VuetifyHeaderComponent);
 
@@ -118,5 +99,7 @@ const app = new Vue({
     console.log(this.$el)
     GlobalStateManager.axiosgetChapter();
     GlobalStateManager.axiosgetProvision();
+    GlobalStateManager.setCSRFToken();
+    GlobalStateManager.checkLogin();
   }
 });

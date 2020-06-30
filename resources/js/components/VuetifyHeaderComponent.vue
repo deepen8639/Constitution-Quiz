@@ -7,12 +7,12 @@
     <v-btn @click="axiosLogout" text small v-if="user_id.data">
       logout
     </v-btn>
-    <!-- <router-link v-bind:to="{ name: 'constitution.login'}">
+    <router-link v-bind:to="{ name: 'constitution.login'}">
       <v-btn text small v-if="!user_id.data">
         <v-icon>mdi-login</v-icon>
         login
       </v-btn>
-    </router-link> -->
+    </router-link>
     <v-btn @click="moveMyPage" text small v-if="user_id.data">
       <v-icon>mdi-account</v-icon>
       mypage
@@ -38,26 +38,19 @@ export default {
   },
   methods: {
     axiosLogout() {
-      if (this.user_id.data) {
-        axios.post("/logout")
-          .then(function(response) {
-            console.log(response)
-            GlobalStateManager.initUserState();
-            alert("ログアウトしました");
-            this.$router.push({
-              name: "constitution.home"
-            });
-          }.bind(this))
+      axios.post("/logout")
+        .then(function(response) {
+          console.log(response)
+          GlobalStateManager.initUserState();
+          alert("ログアウトしました");
+          this.$router.push({
+            name: "constitution.home"
+          });
+        }.bind(this))
 
-          .catch(function(error) {
-            console.log(error)
-          }.bind(this))
-
-      } else {
-        this.$router.push({
-          name: "constitution.login"
-        });
-      }
+        .catch(function(error) {
+          console.log(error)
+        }.bind(this))
     },
 
     moveMyPage() {

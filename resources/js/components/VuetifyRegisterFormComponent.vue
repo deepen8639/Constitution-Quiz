@@ -87,7 +87,6 @@ import GlobalStateManager from "./state/GlobalStateManager";
         form_user_id: "",
         password: "",
         password_confirmation: "",
-        csrfToken: "",
         user_id: GlobalStateManager.state.user_id,
         chapter: GlobalStateManager.state.Chapter,
         provision: GlobalStateManager.state.Provision,
@@ -105,14 +104,14 @@ import GlobalStateManager from "./state/GlobalStateManager";
           "user_id": user_id,
           "password": password,
           "password_confirmation": password_confirmation,
-          "_token": this.csrfToken,
+          "_token": GlobalStateManager.state.csrfToken.data,
         }
         console.log(authinfo);
 
         axios.post("/register", authinfo)
           .then(function(res) {
             console.log(res);
-            GlobalStateManager.setUserId(user_id);
+            GlobalStateManager.setUserID(user_id);
             this.$router.push({
               name: "constitution.mypage"
             });
@@ -129,7 +128,6 @@ import GlobalStateManager from "./state/GlobalStateManager";
 
     },
     created() {
-      this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
       //もしもログインしているならばマイページに飛ぶ
       if (this.user_id.data) {
         this.$router.push({name: "constitution.mypage"});

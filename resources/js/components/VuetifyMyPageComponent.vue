@@ -4,55 +4,55 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <!-- <v-sheet color="grey lighten-3" style="width: 100%;"> -->
-            <v-row>
-              <v-col cols="12" md="4" v-for="(custom_quiz, custom_quiz_index) in user_custom_quiz.data" :key="custom_quiz_index">
-                <v-card max-height="400" class="overflow-y-auto">
-                  <v-card-title>
-                    <!-- {{ custom_quiz_index }} -->
-                    <v-spacer></v-spacer>
-                    <v-btn class="primary" @click="startCustomQuiz(custom_quiz)" small>start</v-btn>
-                  </v-card-title>
-                  <v-card-text v-for="(provision_id, p_id) in custom_quiz" :key="p_id">
-                    {{ provision_apart.data[provision_id.provision_id - 1].title + provision_apart.data[provision_id.provision_id - 1].caption}}
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn text small @click="editCustomQuiz(custom_quiz_index)">
-                      <v-icon>mdi-pencil</v-icon>edit
-                    </v-btn>
-                    <v-btn text small @click="deleteCustomQuiz(custom_quiz_index)">
-                      <v-icon>mdi-trash-can-outline</v-icon><span class="">delete</span>
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-col>
-              <v-col cols="2">
-                <v-btn small @click="clickedCreateButton">
-                  <v-icon>mdi-folder-plus-outline</v-icon>
-                  <span class="">create</span>
-                </v-btn>
-              </v-col>
-            </v-row>
-            <!-- <v-row>
-              <v-col>
-                <span class="h5">Correctness Data</span>
+          <v-row>
+            <v-col cols="12" md="4" v-for="(custom_quiz, custom_quiz_index) in user_custom_quiz.data" :key="custom_quiz_index">
+              <v-card max-height="400" class="overflow-y-auto">
+                <v-card-title>
+                  <v-spacer></v-spacer>
+                  <v-btn class="primary" @click="startCustomQuiz(custom_quiz)" small>start</v-btn>
+                </v-card-title>
+                <v-card-text v-for="(provision_id, p_id) in custom_quiz" :key="p_id">
+                  {{ provision_apart.data[provision_id.provision_id - 1].title + provision_apart.data[provision_id.provision_id - 1].caption}}
+                </v-card-text>
+                <v-card-actions>
+                  <v-btn text small @click="editCustomQuiz(custom_quiz_index)">
+                    <v-icon>mdi-pencil</v-icon>edit
+                  </v-btn>
+                  <v-btn text small @click="deleteCustomQuiz(custom_quiz_index)">
+                    <v-icon>mdi-trash-can-outline</v-icon><span class="">delete</span>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-col>
+            <v-col cols="2">
+              <v-btn small @click="clickedCreateButton">
+                <v-icon>mdi-folder-plus-outline</v-icon>
+                <span class="">create</span>
+              </v-btn>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col>
+              <span class="h5">Correctness Data</span>
 
-                <v-list>
-                  <v-list-group v-for="(chapter_obj, chapter_id) in chapter.data" :key="chapter_id">
-                    <template v-slot:activator>
-                      <v-list-item-title v-text="chapter_obj.number + ' ' + chapter_obj.name">
-                        <v-spacer></v-spacer>
-                      </v-list-item-title>
-                    </template>
-                    <v-list-item class="ml-5" v-for="(p, j) in provision.data[chapter_id]" :key="j">
-                      <v-list-item-title v-text='p.title + p.caption'>
-                      </v-list-item-title>
-                    </v-list-item>
-                  </v-list-group>
-                </v-list>
-              </v-col>
-            </v-row> -->
-          <!-- </v-sheet> -->
+              <v-list>
+                <v-list-group v-for="(chapter_obj, chapter_id) in chapter.data" :key="chapter_id">
+                  <template v-slot:activator>
+                    <v-list-item-title v-text="chapter_obj.number + ' ' + chapter_obj.name">
+                      <v-spacer></v-spacer>
+                    </v-list-item-title>
+                  </template>
+                  <v-list-item class="ml-5" v-for="(p, j) in provision.data[chapter_id]" :key="j">
+                    <v-list-item-title>
+                      {{ p.title + p.caption }}
+                      <v-spacer></v-spacer>
+                      {{ shapingCorrectnessData(p.id) }}
+                    </v-list-item-title>
+                  </v-list-item>
+                </v-list-group>
+              </v-list>
+            </v-col>
+          </v-row>
         </v-col>
       </v-row>
     </v-container>
@@ -71,6 +71,7 @@ export default {
       user_custom_quiz: GlobalStateManager.state.user_custom_quiz,
       provision_apart: GlobalStateManager.state.Provision_apart,
       user_correctness: GlobalStateManager.state.user_correctness,
+      chapter_clicked_flags: [],
 
     }
   },
@@ -86,6 +87,25 @@ export default {
     },
     deleteCustomQuiz: function(custom_quiz_index) {
 
+    },
+    shapingCorrectnessData: function(p_id) {
+      let return_text = "";
+      if ((this.user_correctness.data["wrong_" + p_id] + this.user_correctness.data["correct_" + p_id]) === 0) {
+        return_text = "正答回数：" + this.user_correctness.data["correct_" + p_id] + "　" + "総回答回数：" + (this.user_correctness.data["wrong_" + p_id] + this.user_correctness.data["correct_" + p_id]) + "　" + "正答率：" + "---" + "％";
+      } else {
+        return_text = "正答回数：" + this.user_correctness.data["correct_" + p_id] + "　" + "総回答回数：" + (this.user_correctness.data["wrong_" + p_id] + this.user_correctness.data["correct_" + p_id]) + "　" + "正答率：" + Math.floor((this.user_correctness
+          .data["correct_" + p_id] / (this.user_correctness.data["wrong_" + p_id] + this.user_correctness.data["correct_" + p_id])) * 100) + "％";
+
+      }
+      return return_text;
+    },
+    chapterClicked: function(chapter_id) {
+      let self = this;
+      if (this.chapter_clicked_flags[chapter_id]) {
+        self.chapter_clicked_flags[chapter_id] = false;
+      } else {
+        self.chapter_clicked_flags[chapter_id] = true;
+      }
     },
     startCustomQuiz: function(custom_quiz) {
       let self = this;
@@ -120,6 +140,20 @@ export default {
     console.log('VuetifyMyPageComponent mounted.');
     this.checkLogin();
     GlobalStateManager.axiosgetUserCorrectness(this.user_id.data);
+    GlobalStateManager.axiosgetUserCustomQuiz(this.user_id.data);
+    this.chapter_clicked_flags = {
+      "1": false,
+      "2": false,
+      "3": false,
+      "4": false,
+      "5": false,
+      "6": false,
+      "7": false,
+      "8": false,
+      "9": false,
+      "10": false,
+      "11": false,
+    };
   },
 }
 </script>
