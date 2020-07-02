@@ -8,6 +8,7 @@ use App\CustomQuizzes;
 use App\CrossUseridCustomquiz;
 use App\UserCorrectnessData;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ConstitutionController extends Controller
 {
@@ -31,6 +32,46 @@ class ConstitutionController extends Controller
         $return_data[$provision->chapter_id][] = $provision;
       }
       return $return_data;
+    }
+
+    public function createUserCustomQuiz(Request $request)
+    {
+      $user_id = $request->user_id;
+      $provision_selected = $request->provision_selected;
+      //新しいカスタムクイズの登録
+      try {
+        $custom_quiz_id = CrossUseridCustomquiz::create(["user_id" => $user_id]);
+        $custom_quiz_id = $custom_quiz_id->id;
+        // $debug_return = array();
+        foreach ($provision_selected as $provision_selected_by_chapter) {
+          foreach ($provision_selected_by_chapter as $provision_id) {
+            $result = CustomQuizzes::create(["custom_quize_id" => $custom_quiz_id, "provision_id" => $provision_id]);
+            // $debug_return[] = $result;
+          }
+        }
+        $return_data = $this->returnUserCustomQuiz($user_id);
+        return $return_data;
+      } catch (\Exception $e) {
+        return $e;
+      }
+
+    // return [$user_id, $provision_selected, "OK!"];
+    }
+
+    public function deleteUserCustomQuiz(Request $request)
+    {
+      $custom_quiz_id = $request->custom_quiz_id;
+      $user_id = $request->user_id;
+      DB::transaction(function() use ($custom_quiz_id){
+        $custom = CustomQuizzes::where('custom_quize_id', $custom_quiz_id)->delete();
+        $cross_custom = CrossUseridCustomquiz::where('custom_quize_id', $custom_quiz_id)->delete();
+      });
+      return $this->returnUserCustomQuiz($user_id);
+    }
+
+    public function updateUserCustomQuiz()
+    {
+
     }
 
     public function returnUserCustomQuiz($user_id)

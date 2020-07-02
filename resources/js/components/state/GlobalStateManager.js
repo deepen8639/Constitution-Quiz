@@ -34,9 +34,7 @@ export default {
       data: false,
       required: false
     },
-    returnDataAtLogin: {
-      data: false,
-    }
+
   },
   initUserState() {
     this.state.user_id.data = false;
@@ -119,6 +117,9 @@ export default {
       }).catch(function(error) {
         console.log("axiosgetUserCustomQuiz error!", error);
       });
+  },
+  setUserCustomQuiz(user_custom_quiz) {
+    this.state.user_custom_quiz.data = user_custom_quiz;
   },
   axiospostUserCustomQuiz() {
     //新しくカスタムクイズをDBに保存する

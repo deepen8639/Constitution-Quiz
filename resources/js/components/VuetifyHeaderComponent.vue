@@ -43,7 +43,7 @@ export default {
           console.log(response)
           GlobalStateManager.initUserState();
           alert("ログアウトしました");
-          this.$router.push({
+          this.$router.go({
             name: "constitution.home"
           });
         }.bind(this))
